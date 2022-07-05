@@ -3,14 +3,17 @@ import "./employees-list.css"
 
 
 
-const EmpolyeesList = ({data}) => {
+const EmpolyeesList = ({data, onDelete}) => {
 
    const elements = data.map(item => {
       const {id, ...itemProps} = item; 
 
       return(
          // <EmpolyeesListItem name={item.name} salary={item.salary}/>
-         <EmpolyeesListItem key={id} {...itemProps}/>
+         <EmpolyeesListItem 
+            key={id} 
+            {...itemProps}
+            onDelete={() => onDelete(id)}/>
          
       )
    
