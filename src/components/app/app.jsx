@@ -122,6 +122,18 @@ class App extends Component {
       })
    }
 
+   sortRise = () => {
+      console.log(1)
+   }
+
+   sortKilo = () => {
+      console.log(2)
+   }
+
+   onUpdateSearch = (term) => {
+      this.setState({term});
+   }
+
    render() {
       const {data, total, bonus, term} = this.state;
       const visibleData = this.searchEmp(data, term);
@@ -132,8 +144,10 @@ class App extends Component {
                bonus={bonus}/>
 
             <div className="search-panel">
-               <SearchPanel />
-               <AppFilter />
+               <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+               <AppFilter 
+               riseEmp={this.sortRise}
+               kiloEmp={this.sortKilo} />
             </div>
 
             <EmpolyeesList data={visibleData}
