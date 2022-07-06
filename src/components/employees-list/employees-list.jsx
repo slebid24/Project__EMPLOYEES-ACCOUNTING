@@ -3,7 +3,7 @@ import "./employees-list.css"
 
 
 
-const EmpolyeesList = ({data, onDelete}) => {
+const EmpolyeesList = ({data, onDelete, onToggleIncrease, onToggleRise}) => {
 
    const elements = data.map(item => {
       const {id, ...itemProps} = item; 
@@ -13,7 +13,9 @@ const EmpolyeesList = ({data, onDelete}) => {
          <EmpolyeesListItem 
             key={id} 
             {...itemProps}
-            onDelete={() => onDelete(id)}/>
+            onDelete={() => onDelete(id)}
+            onToggleIncrease={() => onToggleIncrease(id)}
+            onToggleRise={() => onToggleRise(id)}/>
          
       )
    
