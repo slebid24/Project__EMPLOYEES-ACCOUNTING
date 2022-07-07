@@ -17,9 +17,15 @@ class App extends Component {
             { name: "Soul G.", salary: 2000, increase: true, rise: false, id: 2 },
             { name: "Nacho V.", salary: 1000, increase: false, rise: false, id: 3 },
          ],
+         sortRise: [
+            
+         ],
+         sortKilo: [
+            
+         ],
          total: 3,
          bonus: 1,
-         term: ""
+         term: "",
       }
       this.minID = 4;
    }
@@ -122,12 +128,29 @@ class App extends Component {
       })
    }
 
+   sortDefault = () => {
+      this.setState(state => ({
+         sortRise: [],
+         sortKilo: []
+      }))
+   }
+
    sortRise = () => {
-      console.log(1)
+      this.setState(state => ({
+         sortRise: this.state.data.filter(item => {
+            return item.rise;
+         }),
+         sortKilo: []
+      }))
    }
 
    sortKilo = () => {
-      console.log(2)
+      this.setState(state => ({
+         sortKilo: this.state.data.filter(item => {
+            return item.salary > 1000;
+         }),
+         sortRise: []
+      }))
    }
 
    onUpdateSearch = (term) => {
@@ -135,8 +158,8 @@ class App extends Component {
    }
 
    render() {
-      const {data, total, bonus, term} = this.state;
-      const visibleData = this.searchEmp(data, term);
+      const {data, total, bonus, term, sortKilo, sortRise} = this.state;
+      const visibleData = this.searchEmp(((sortRise.length > 0) ? sortRise : false || (sortKilo.length > 0) ? sortKilo : data), term);
       return (
          <div className="app">
             <AppInfo 
@@ -146,8 +169,11 @@ class App extends Component {
             <div className="search-panel">
                <SearchPanel onUpdateSearch={this.onUpdateSearch} />
                <AppFilter 
-               riseEmp={this.sortRise}
-               kiloEmp={this.sortKilo} />
+               sortDefault={this.sortDefault}
+               sortRise={this.sortRise}
+               sortKilo={this.sortKilo}
+               accsess={data}
+                />
             </div>
 
             <EmpolyeesList data={visibleData}

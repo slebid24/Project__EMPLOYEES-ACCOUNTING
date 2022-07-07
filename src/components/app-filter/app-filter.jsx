@@ -5,43 +5,92 @@ import "./app-filter.css";
 class AppFilter extends Component {
    constructor(props) {
       super(props);
-      this.state = ({
-         firtsButVid: true,
-         secondButVid: false,
-         thirdButVid: false,
+      this.state = {
+         all: true,
+         rise: false,
+         kilo: false
+      }
+   }
+
+   toAcsessSortRise = (e) => {
+      const filt = this.props.accsess;
+      const riseComparison = filt.filter(item => {
+         return item.rise == true;
       })
+
+      if (riseComparison.length < 1) {
+         return;
+      } else {
+         this.toSortSwitch(e);
+      }
+
    }
 
-   activeClass = (btn) => {
-      let result = btn ? "btn-light": "btn-outline-light";
-      return result;
-   } 
+   toAcsessSortKilo = (e) => {
+      const filt = this.props.accsess;
+      const kiloComparison = filt.filter(item => {
+         return item.salary > 1000;
+      })
 
-   changer = (e) => {
-      console.log(e.target)
+      if (kiloComparison.length < 1) {
+         return;
+      } else {
+         this.toSortSwitch(e);
+      }
+
    }
+
+   toSortSwitch = (e) => {
+      const defen = e.target.getAttribute("data-number")
+      this.setState(state => {
+         return {
+            all: (defen == 1) ? true : false,
+            rise: (defen == 2) ? true : false,
+            kilo: (defen == 3) ? true : false,
+         }
+      }
+      )
+
+      if (defen == 1) {
+         this.props.sortDefault();
+      } else if (defen == 2) {
+         this.props.sortRise();
+      } else {
+         this.props.sortKilo();
+      }
+   }
+
+
+
+
+
+
+
 
    render() {
-      const {firtsButVid, secondButVid, thirdButVid} = this.state;
+      const { all, rise, kilo } = this.state;
       return (
          <div className="btn-group">
-            <button 
-               className={"btn" + (() => {this.activeClass(secondButVid)})}
+            <button
+               className={`btn ${all ? "btn-light" : "btn-outline-light"}`}
+               data-number="1"
                type="button"
-               onClick={this.changer}>
-                  Всі співробітники
+               onClick={this.toSortSwitch}>
+               Всі співробітники
             </button>
-            <button 
-               className={"btn" + (() => {this.activeClass(secondButVid)})}
+            <button
+               className={`btn ${rise ? "btn-light" : "btn-outline-light"}`}
+               data-number="2"
                type="button"
-               onClick={this.changer}>
-                  Співробітники на підвищення
+               onClick={this.toAcsessSortRise}>
+               Співробітники на підвищення
             </button>
-            <button 
-               className={"btn" + (() => {this.activeClass(thirdButVid)})}
+            <button
+               className={`btn ${kilo ? "btn-light" : "btn-outline-light"}`}
+               data-number="3"
                type="button"
-               onClick={this.changer}>
-                  З/П більше 1000$
+               onClick={this.toAcsessSortKilo}>
+               З/П більше 1000$
             </button>
          </div>
       )
