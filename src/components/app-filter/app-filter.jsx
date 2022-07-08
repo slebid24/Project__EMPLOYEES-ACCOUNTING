@@ -14,11 +14,10 @@ class AppFilter extends Component {
 
    toAcsessSortRise = (e) => {
       const filt = this.props.accsess;
-      const riseComparison = filt.filter(item => {
-         return item.rise == true;
-      })
 
-      if (riseComparison.length < 1) {
+      if (!filt.some(item => {
+         return item.rise == true;
+      })) {
          return;
       } else {
          this.toSortSwitch(e);
@@ -28,11 +27,10 @@ class AppFilter extends Component {
 
    toAcsessSortKilo = (e) => {
       const filt = this.props.accsess;
-      const kiloComparison = filt.filter(item => {
-         return item.salary > 1000;
-      })
 
-      if (kiloComparison.length < 1) {
+      if (!filt.some(item => {
+         return item.salary > 1000;
+      }).length < 1) {
          return;
       } else {
          this.toSortSwitch(e);
@@ -59,13 +57,6 @@ class AppFilter extends Component {
          this.props.sortKilo();
       }
    }
-
-
-
-
-
-
-
 
    render() {
       const { all, rise, kilo } = this.state;
